@@ -1,0 +1,316 @@
+        .bio-records * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .bio-records {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+            padding: 40px 24px;
+        }
+
+        .bio-records .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .bio-records .header-title {
+            margin-bottom: 30px;
+        }
+
+        .bio-records .header-title h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .bio-records .header-title p {
+            font-size: 1.1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .bio-records .search-section {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .bio-records .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .bio-records .search-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 18px;
+            height: 18px;
+            color: #95a5a6;
+        }
+
+        .bio-records .search-input {
+            width: 100%;
+            padding: 12px 12px 12px 45px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            transition: border-color 0.3s ease;
+        }
+
+        .bio-records .search-input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .bio-records .search-input::placeholder {
+            color: #adb5bd;
+        }
+
+        .bio-records .scan-button {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background-color: #e9ecef;
+            border: none;
+            border-radius: 8px;
+            color: #6c757d;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .bio-records .scan-button:hover {
+            background-color: #dee2e6;
+        }
+
+        .bio-records .scan-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        .bio-records .table-container {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .bio-records .table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .bio-records .table-header {
+            background-color: #FEE715;
+            color: #2c3e50;
+        }
+
+        .bio-records .table-header th {
+            padding: 18px 20px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .bio-records .table-row {
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s ease;
+        }
+
+        .bio-records .table-row:hover {
+            background-color: #f8f9fa;
+        }
+
+        .bio-records .table-row:last-child {
+            border-bottom: none;
+        }
+
+        .bio-records .table-cell {
+            padding: 20px;
+            vertical-align: middle;
+        }
+
+        .bio-records .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .bio-records .avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .bio-records .user-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 4px;
+        }
+
+        .bio-records .user-details .phone {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+            margin-bottom: 2px;
+        }
+
+        .bio-records .user-details .id {
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        .bio-records .type-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #e3f2fd;
+            color: #1976d2;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            border: 1px solid #bbdefb;
+        }
+
+        .bio-records .date-info {
+            color: #5a6c7d;
+        }
+
+        .bio-records .date-info .date {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+
+        .bio-records .date-info .time {
+            font-size: 0.9rem;
+            color: #95a5a6;
+        }
+
+        .bio-records .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .bio-records .action-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .bio-records .action-btn.view {
+            background-color: #f8f9fa;
+            color: #6c757d;
+        }
+
+        .bio-records .action-btn.view:hover {
+            background-color: #e9ecef;
+            color: #495057;
+        }
+
+        .bio-records .action-btn.edit {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .bio-records .action-btn.edit:hover {
+            background-color: #ffeaa7;
+            color: #6c5400;
+        }
+
+        .bio-records .action-btn.delete {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .bio-records .action-btn.delete:hover {
+            background-color: #f5c6cb;
+            color: #5a1a1a;
+        }
+
+        .bio-records .action-icon {
+            width: 16px;
+            height: 16px;
+        }
+
+        @media (max-width: 768px) {
+            .bio-records .container {
+                padding: 20px 15px;
+            }
+
+            .bio-records .header h1 {
+                font-size: 2rem;
+            }
+
+            .bio-records .search-section {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .bio-records .search-container {
+                max-width: none;
+            }
+
+            .bio-records .table-container {
+                overflow-x: auto;
+            }
+
+            .bio-records .table {
+                min-width: 800px;
+            }
+
+            .bio-records .table-header th,
+            .bio-records .table-cell {
+                padding: 15px;
+            }
+
+            .bio-records .user-info {
+                gap: 12px;
+            }
+
+            .bio-records .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
+
+            .header-title h1,
+            .header-title p,
+            .metric-header span,
+            .metric-value,
+            .metric-subtitle,
+            .activity-header h3,
+            .activity-header p,
+            .activity-name,
+            .activity-phone,
+            .activity-time {
+                font-family: 'Montserrat', sans-serif;
+            }

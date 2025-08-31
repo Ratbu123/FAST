@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login - F.A.S.T</title>
+    <link rel="stylesheet" href="./styles/LoginStyles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <div class="admin-login-title">
+        <h2>Admin Log In</h2>
+    </div>
+    <div class="login-container">
+        <div class="logo-container">
+            <div class="logo">F.A.S.T</div>
+            <div class="login-title">Facial Authentication & Signature Technology</div>
+        </div>
+        <form>
+            <div class="input-group">
+                <label for="username">Username</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-user"></i>
+                    <input type="text" id="username" name="username" required>
+                </div>
+            </div>
+            <div class="input-group">
+                <label for="password">Password</label>
+                <div class="input-with-icon">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="password" name="password" required>
+                </div>
+            </div>
+            <div class="remember-me">
+                <input type="checkbox" id="rememberMe">
+                <label for="rememberMe">Remember Me</label>
+            </div>
+            <button class="login-btn" type="button">Login</button>
+        </form>
+        <img src="./images/logo.png" alt="Logo Image" class="footer-logo">
+        <div class="footer">
+            <p>Facial Authentication & Signature Technology</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

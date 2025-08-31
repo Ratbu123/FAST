@@ -1,0 +1,279 @@
+.events-tab * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.events-tab {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.5;
+    padding: 40px 24px;
+}
+
+.events-tab .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    min-height: 100vh;
+}
+
+/* Header Title */
+.events-tab .header-title {
+    margin-bottom: 30px;
+    text-align: left; /* keep text aligned left */
+}
+
+.events-tab .header-title h1 {
+    font-size: 24px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 8px;
+}
+
+.events-tab .header-title p {
+    font-size: 1.1rem;
+    color: #666;
+    font-weight: 400;
+    margin: 0;
+}
+
+/* Header Right - Search & Dropdown */
+.events-tab .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* keep aligned left */
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Search Styles (center only the bar itself) */
+.events-tab .search-container {
+    position: relative;
+    margin: 0 auto; /* this centers the search bar */
+    width: 100%;
+    max-width: 300px;
+}
+
+.events-tab .search-input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 1rem;
+    background-color: white;
+    transition: border-color 0.3s ease;
+}
+
+.events-tab .search-input:focus {
+    border-color: #007bff;
+}
+
+.events-tab .search-input::placeholder {
+    color: #999;
+}
+
+.events-tab .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #666;
+    font-size: 14px;
+    pointer-events: none;
+}
+
+/* Year Filter Dropdown */
+.events-tab .year-dropdown {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #333;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s;
+}
+
+.events-tab .year-dropdown:hover,
+.events-tab .year-dropdown:focus {
+    border-color: #007bff;
+}
+
+/* Table Container */
+.events-tab .table-container {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.events-tab .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.events-tab .table-header {
+    background-color: #FEE715;
+    color: #333;
+}
+
+.events-tab .table-header th {
+    padding: 15px 20px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.events-tab .table-header th:last-child {
+    text-align: right;
+    width: 120px;
+}
+
+/* Table Row Styles */
+.events-tab .table-row {
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s;
+}
+
+.events-tab .table-row:hover {
+    background-color: #f8f9fa;
+}
+
+.events-tab .table-row:last-child {
+    border-bottom: none;
+}
+
+.events-tab .table-row td {
+    padding: 16px 20px;
+    vertical-align: top;
+}
+
+/* Name Cell Styles */
+.events-tab .name-cell {
+    min-width: 300px;
+}
+
+.events-tab .user-id {
+    font-size: 12px;
+    color: #999;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+.events-tab .user-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 2px;
+}
+
+.events-tab .user-phone {
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.events-tab .user-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #e3f2fd;
+    color: #1976d2;
+    font-size: 11px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Member Since Styles */
+.events-tab .member-since {
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Status Badge Styles */
+.events-tab .status-cell {
+    text-align: center;
+}
+
+.events-tab .status-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+}
+
+.events-tab .status-badge.registered {
+    background-color: #4caf50;
+    color: white;
+}
+
+/* Signed Date Styles */
+.events-tab .signed-date {
+    font-size: 14px;
+    color: #666;
+    white-space: nowrap;
+}
+
+/* Time Cell Styles */
+.events-tab .time-cell {
+    font-size: 12px;
+    color: #999;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .events-tab .container {
+        padding: 10px;
+    }
+    
+    .events-tab .header-right {
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .events-tab .search-input {
+        width: 100%;
+        max-width: 300px;
+    }
+    
+    .events-tab .table-container {
+        overflow-x: auto;
+    }
+    
+    .events-tab .event-table {
+        min-width: 800px;
+    }
+    
+    .events-tab .table-header th,
+    .events-tab .table-row td {
+        padding: 12px 15px;
+    }
+    
+    .events-tab .name-cell {
+        min-width: 250px;
+    }
+}
+
+            .header-title h1,
+            .header-title p,
+            .metric-header span,
+            .metric-value,
+            .metric-subtitle,
+            .activity-header h3,
+            .activity-header p,
+            .activity-name,
+            .activity-phone,
+            .activity-time {
+                font-family: 'Montserrat', sans-serif;
+            }
