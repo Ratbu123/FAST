@@ -1,0 +1,147 @@
+<?php
+session_start();
+require_once __DIR__ . '/../config.php'; // Adjust path if needed
+
+// Redirect if not logged in
+if (!isset($_SESSION['admin_logged_in']) || $_SESSION['admin_logged_in'] !== true) {
+    header("Location: admin-login.php");
+    exit;
+}
+
+// Fetch metrics
+$totalUsers = $conn->query("SELECT COUNT(*) FROM users")->fetchColumn();
+$totalPWDs = $conn->query("SELECT COUNT(*) FROM users WHERE user_type='PWD'")->fetchColumn();
+$totalSeniors = $conn->query("SELECT COUNT(*) FROM users WHERE user_type='Senior'")->fetchColumn();
+$pending = $conn->query("SELECT COUNT(*) FROM users WHERE verified=0")->fetchColumn();
+
+// Fetch users
+$stmt = $conn->prepare("SELECT * FROM users ORDER BY created_at DESC");
+$stmt->execute();
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>User Management - F.A.S.T</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
+
+<main class="max-w-7xl mx-auto px-6 py-12">
+
+  <!-- Header -->
+  <header class="mb-14 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+    <div class="flex items-center gap-3">
+      <div class="w-14 h-14 rounded-2xl bg-yellow-400 flex items-center justify-center text-gray-900 text-2xl shadow-lg">
+        <i class="fas fa-users-cog"></i>
+      </div>
+      <div>
+        <h1 class="text-4xl font-bold text-yellow-400">User Management</h1>
+        <p class="text-gray-400 text-sm">Manage PWDs & Senior Citizens, verify documents, monitor activity</p>
+      </div>
+    </div>
+    <div>
+      <a href="adduser.php" class="px-5 py-2 rounded-xl text-sm font-semibold bg-green-500/90 text-white shadow-lg flex items-center gap-2 hover:bg-green-600 transition">
+        <i class="fas fa-plus text-xs"></i> Add User
+      </a>
+    </div>
+  </header>
+
+  <!-- Stats Grid -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+    <div class="bg-gradient-to-br from-blue-600/80 to-blue-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-medium text-gray-200">Total PWDs & Seniors</h3>
+        <i class="fas fa-users text-2xl text-blue-300"></i>
+      </div>
+      <div class="text-5xl font-extrabold text-white"><?= $totalUsers ?></div>
+      <p class="text-sm text-gray-300 mt-2">All registered users</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-indigo-600/80 to-indigo-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-medium text-gray-200">PWDs</h3>
+        <i class="fas fa-wheelchair text-2xl text-indigo-300"></i>
+      </div>
+      <div class="text-5xl font-extrabold text-white"><?= $totalPWDs ?></div>
+      <p class="text-sm text-gray-300 mt-2">Registered PWDs</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-green-600/80 to-green-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-medium text-gray-200">Seniors</h3>
+        <i class="fas fa-user-clock text-2xl text-green-300"></i>
+      </div>
+      <div class="text-5xl font-extrabold text-white"><?= $totalSeniors ?></div>
+      <p class="text-sm text-gray-300 mt-2">Senior Citizens</p>
+    </div>
+
+    <div class="bg-gradient-to-br from-red-600/80 to-red-800/90 backdrop-blur-md rounded-2xl shadow-xl p-6 hover:-translate-y-1 hover:shadow-2xl transition-all duration-300">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="text-sm font-medium text-gray-200">Pending</h3>
+        <i class="fas fa-clock text-2xl text-red-300"></i>
+      </div>
+      <div class="text-5xl font-extrabold text-white"><?= $pending ?></div>
+      <p class="text-sm text-gray-300 mt-2">Awaiting verification</p>
+    </div>
+  </section>
+
+  <!-- User Table -->
+  <section class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl overflow-hidden">
+    <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
+      <h2 class="text-xl font-semibold text-yellow-400 flex items-center gap-2">
+        <i class="fas fa-users"></i> Registered Users
+      </h2>
+      <span class="text-sm text-gray-400">Showing <?= count($users) ?> of <?= $totalUsers ?> users</span>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full text-sm">
+        <thead class="bg-white/10 text-gray-300 uppercase text-xs tracking-wide">
+          <tr>
+            <th class="px-4 py-3 text-left">User ID</th>
+            <th class="px-4 py-3 text-left">Name</th>
+            <th class="px-4 py-3 text-left">Type</th>
+            <th class="px-4 py-3 text-left">Email</th>
+            <th class="px-4 py-3 text-left">Registration</th>
+            <th class="px-4 py-3 text-left">Verification</th>
+            <th class="px-4 py-3 text-center">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-white/10 text-gray-200">
+          <?php foreach ($users as $user): ?>
+          <tr class="hover:bg-white/5 transition">
+            <td class="px-4 py-3"><?= htmlspecialchars($user['id']) ?></td>
+            <td class="px-4 py-3"><?= htmlspecialchars($user['fullname']) ?></td>
+            <td class="px-4 py-3">
+              <span class="px-2 py-1 rounded text-xs <?= $user['user_type'] == 'PWD' ? 'bg-blue-600/40' : ($user['user_type']=='Senior'?'bg-green-600/40':'bg-gray-600/40') ?>">
+                <?= htmlspecialchars($user['user_type']) ?>
+              </span>
+            </td>
+            <td class="px-4 py-3"><?= htmlspecialchars($user['email']) ?></td>
+            <td class="px-4 py-3"><?= date('M d, Y', strtotime($user['created_at'])) ?></td>
+            <td class="px-4 py-3">
+              <?php if ($user['verified']): ?>
+                <span class="bg-green-500/40 text-green-300 px-2 py-1 rounded text-xs">Verified</span>
+              <?php else: ?>
+                <span class="bg-red-500/40 text-red-300 px-2 py-1 rounded text-xs">Pending</span>
+              <?php endif; ?>
+            </td>
+            <td class="px-4 py-3 flex gap-2 justify-center">
+              <a href="viewuser.php?id=<?= $user['id'] ?>" class="flex items-center gap-1 bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-xs"><i class="fas fa-eye"></i> View</a>
+              <a href="verifyuser.php?id=<?= $user['id'] ?>" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-xs"><i class="fas fa-check"></i> Verify</a>
+              <a href="deleteuser.php?id=<?= $user['id'] ?>" class="flex items-center gap-1 bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-xs"><i class="fas fa-trash"></i> Delete</a>
+            </td>
+          </tr>
+          <?php endforeach; ?>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>

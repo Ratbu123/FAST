@@ -12,7 +12,7 @@ if (isset($_COOKIE['rememberme'])) {
     setcookie('rememberme', '', time() - 3600, "/", "", false, true);
 }
 
-// Redirect to login page
-header("Location: login.php");
+// Redirect to login page with logout success flag
+header("Location: admin-login.php?logged_out=1");
 exit();
 ?>

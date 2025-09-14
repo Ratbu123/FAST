@@ -8,6 +8,11 @@ if (isset($_SESSION['user_id'])) {
     exit();
 }
 
+// Generate CSRF token
+if (empty($_SESSION['csrf_token'])) {
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+}
+
 // Handle "Remember Me" cookie
 if (isset($_COOKIE['rememberme'])) {
     list($username, $token) = explode(':', $_COOKIE['rememberme']);
@@ -33,46 +38,60 @@ if (isset($_COOKIE['rememberme'])) {
 // Handle login form submission
 $error = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $username = trim($_POST['username']);
-    $password = $_POST['password'];
-    $remember = isset($_POST['rememberMe']);
+    if (!hash_equals($_SESSION['csrf_token'], $_POST['csrf_token'] ?? '')) {
+        $error = "Invalid request. Please try again.";
+    } else {
+        $username = trim($_POST['username']);
+        $password = $_POST['password'];
+        $remember = isset($_POST['rememberMe']);
 
-    $stmt = $conn->prepare("SELECT user_id, password, fullname FROM users WHERE username = ? AND role = 'Admin' LIMIT 1");
-    $stmt->bind_param("s", $username);
-    $stmt->execute();
-    $stmt->store_result();
+        $stmt = $conn->prepare("SELECT user_id, password, fullname FROM users WHERE username = ? AND role = 'Admin' LIMIT 1");
+        $stmt->bind_param("s", $username);
+        $stmt->execute();
+        $stmt->store_result();
 
-    if ($stmt->num_rows === 1) {
-        $stmt->bind_result($user_id, $hashedPassword, $fullname);
-        $stmt->fetch();
+        if ($stmt->num_rows === 1) {
+            $stmt->bind_result($user_id, $hashedPassword, $fullname);
+            $stmt->fetch();
 
-        if (password_verify($password, $hashedPassword)) {
-            // ✅ Login success
-            $_SESSION['user_id']  = $user_id;
-            $_SESSION['username'] = $username;
-            $_SESSION['fullname'] = $fullname;
+            if (password_verify($password, $hashedPassword)) {
+                // ✅ Login success
+                $_SESSION['user_id']  = $user_id;
+                $_SESSION['username'] = $username;
+                $_SESSION['fullname'] = $fullname;
 
-            // Remember Me functionality
-            if ($remember) {
-                $token = bin2hex(random_bytes(16));
-                setcookie('rememberme', "$username:$token", time() + (86400 * 30), "/", "", false, true);
+                // Remember Me functionality
+                if ($remember) {
+                    $token = bin2hex(random_bytes(16));
+                    setcookie(
+                        'rememberme',
+                        "$username:$token",
+                        [
+                            'expires' => time() + (86400 * 30),
+                            'path' => '/',
+                            'secure' => isset($_SERVER['HTTPS']),
+                            'httponly' => true,
+                            'samesite' => 'Strict'
+                        ]
+                    );
 
-                $update = $conn->prepare("UPDATE users SET remember_token=? WHERE user_id=?");
-                $update->bind_param("si", $token, $user_id);
-                $update->execute();
-                $update->close();
+                    $update = $conn->prepare("UPDATE users SET remember_token=? WHERE user_id=?");
+                    $update->bind_param("si", $token, $user_id);
+                    $update->execute();
+                    $update->close();
+                }
+
+                header("Location: main.php");
+                exit();
+            } else {
+                $error = "Invalid username or password.";
             }
-
-            header("Location: main.php");
-            exit();
         } else {
             $error = "Invalid username or password.";
         }
-    } else {
-        $error = "Invalid username or password.";
-    }
 
-    $stmt->close();
+        $stmt->close();
+    }
 }
 $conn->close();
 ?>
@@ -103,13 +122,14 @@ $conn->close();
         <span class="text-4xl font-extrabold text-yellow-300 drop-shadow-md">F.A.S.T</span>
     </div>
 
-    <!-- Facial Authentication Signature Technology -->
     <p class="text-center text-gray-200 text-sm mb-6 italic">
         Facial Authentication Signature Technology
     </p>
 
     <!-- Login Form -->
     <form action="" method="POST" class="space-y-5">
+        <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['csrf_token']); ?>">
+        
         <div>
             <label for="username" class="block text-sm font-medium text-gray-200">Username</label>
             <div class="mt-1 relative">
@@ -143,7 +163,6 @@ $conn->close();
         </button>
     </form>
 
-    <!-- Powered by FAST Technology -->
     <p class="text-center text-gray-300 text-xs mt-6">Powered by FAST Technology</p>
 </div>
 
