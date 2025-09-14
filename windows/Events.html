@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AGMA Events Dashboard - F.A.S.T</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-950 text-gray-100 font-sans min-h-screen">
+
+  <!-- Wrapper -->
+  <main class="max-w-7xl mx-auto px-6 py-12">
+    
+    <!-- Header -->
+    <header class="mb-14 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-14 h-14 rounded-2xl bg-yellow-400 flex items-center justify-center text-gray-900 text-2xl shadow-lg">
+          <i class="fas fa-calendar-alt"></i>
+        </div>
+        <div>
+          <h1 class="text-4xl font-bold text-yellow-400">AGMA Events</h1>
+          <p class="text-gray-400 text-sm">Annual General Meeting Assembly</p>
+        </div>
+      </div>
+      <div>
+        <button onclick="document.getElementById('addModal').classList.remove('hidden')" 
+                class="px-5 py-2 rounded-xl text-sm font-semibold bg-yellow-500 text-white shadow-lg hover:bg-yellow-600 flex items-center gap-2">
+          <i class="fas fa-plus"></i> Add Event
+        </button>
+      </div>
+    </header>
+
+    <!-- Metrics Grid -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+      <div class="bg-gradient-to-br from-blue-600/80 to-blue-800/90 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-medium text-gray-200">Total Events</h3>
+          <i class="fas fa-list text-2xl text-blue-300"></i>
+        </div>
+        <div class="text-5xl font-extrabold text-white">54</div>
+        <p class="text-sm text-gray-300 mt-2">All registered events</p>
+      </div>
+      <div class="bg-gradient-to-br from-green-600/80 to-green-800/90 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-medium text-gray-200">Verified</h3>
+          <i class="fas fa-check-circle text-2xl text-green-300"></i>
+        </div>
+        <div class="text-5xl font-extrabold text-white">38</div>
+        <p class="text-sm text-gray-300 mt-2">Approved events</p>
+      </div>
+      <div class="bg-gradient-to-br from-indigo-600/80 to-indigo-800/90 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-medium text-gray-200">Pending</h3>
+          <i class="fas fa-clock text-2xl text-indigo-300"></i>
+        </div>
+        <div class="text-5xl font-extrabold text-white">12</div>
+        <p class="text-sm text-gray-300 mt-2">Awaiting verification</p>
+      </div>
+      <div class="bg-gradient-to-br from-red-600/80 to-red-800/90 rounded-2xl shadow-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-sm font-medium text-gray-200">Declined</h3>
+          <i class="fas fa-times-circle text-2xl text-red-300"></i>
+        </div>
+        <div class="text-5xl font-extrabold text-white">4</div>
+        <p class="text-sm text-gray-300 mt-2">Rejected requests</p>
+      </div>
+    </section>
+
+    <!-- Event Records -->
+    <section class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl mb-12">
+      <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-semibold text-yellow-400 flex items-center gap-2">
+            <i class="fas fa-table"></i> Event Records
+          </h2>
+          <p class="text-gray-400 text-sm">List of all registered events</p>
+        </div>
+        <div class="flex gap-3">
+          <input type="text" placeholder="Search events..."
+                 class="px-4 py-2 rounded-xl bg-gray-900 border border-gray-700 text-sm focus:ring-2 focus:ring-yellow-500 focus:outline-none">
+          <select class="px-4 py-2 rounded-xl bg-gray-900 border border-gray-700 text-sm">
+            <option>2025</option>
+            <option>2024</option>
+            <option>2023</option>
+          </select>
+        </div>
+      </div>
+      
+      <div class="overflow-x-auto">
+        <table class="min-w-full divide-y divide-gray-800 text-sm">
+          <thead class="bg-gray-900/50">
+            <tr>
+              <th class="px-6 py-3 text-left font-semibold text-gray-300">Name</th>
+              <th class="px-6 py-3 text-left font-semibold text-gray-300">Member Since</th>
+              <th class="px-6 py-3 text-left font-semibold text-gray-300">Status</th>
+              <th class="px-6 py-3 text-left font-semibold text-gray-300">Signed Date</th>
+              <th class="px-6 py-3 text-center font-semibold text-gray-300">Action</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-800 text-gray-200">
+            <tr class="hover:bg-white/5 transition">
+              <td class="px-6 py-4">Event Alpha</td>
+              <td class="px-6 py-4">March 2022</td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-green-100/20 text-green-400">Verified</span>
+              </td>
+              <td class="px-6 py-4">Sep 14, 2025</td>
+              <td class="px-6 py-4 text-center">
+                <button class="px-3 py-1 text-xs bg-indigo-600 rounded-lg hover:bg-indigo-700">View</button>
+              </td>
+            </tr>
+            <tr class="hover:bg-white/5 transition">
+              <td class="px-6 py-4">Event Beta</td>
+              <td class="px-6 py-4">July 2023</td>
+              <td class="px-6 py-4">
+                <span class="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100/20 text-yellow-400">Pending</span>
+              </td>
+              <td class="px-6 py-4">Aug 20, 2025</td>
+              <td class="px-6 py-4 text-center">
+                <button class="px-3 py-1 text-xs bg-indigo-600 rounded-lg hover:bg-indigo-700">View</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Recent Activity -->
+    <section class="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-xl">
+      <div class="px-6 py-5 border-b border-white/10 flex justify-between items-center">
+        <div>
+          <h2 class="text-xl font-semibold text-yellow-400 flex items-center gap-2">
+            <i class="fas fa-history"></i> Recent Activity
+          </h2>
+          <p class="text-gray-400 text-sm">Latest event actions</p>
+        </div>
+        <a href="#" class="text-sm text-yellow-300 hover:underline">View All</a>
+      </div>
+      <ul class="divide-y divide-white/10 text-gray-200">
+        <li class="px-6 py-4 flex justify-between items-center hover:bg-white/5 transition">
+          <span class="flex items-center gap-2">
+            <i class="fas fa-check text-yellow-400"></i> Event Alpha verified.
+          </span>
+          <span class="text-sm text-gray-400">Sep 14, 2025 · 2:30 PM</span>
+        </li>
+        <li class="px-6 py-4 flex justify-between items-center hover:bg-white/5 transition">
+          <span class="flex items-center gap-2">
+            <i class="fas fa-plus text-yellow-400"></i> Event Beta added.
+          </span>
+          <span class="text-sm text-gray-400">Sep 14, 2025 · 1:45 PM</span>
+        </li>
+      </ul>
+    </section>
+  </main>
+
+  <!-- Add Event Modal -->
+  <div id="addModal" class="fixed inset-0 bg-black/70 hidden flex items-center justify-center z-50">
+    <div class="bg-gray-900 rounded-2xl shadow-2xl w-full max-w-lg p-8 relative">
+      <button onclick="document.getElementById('addModal').classList.add('hidden')" 
+              class="absolute top-4 right-4 text-gray-400 hover:text-gray-200">
+        <i class="fas fa-times text-lg"></i>
+      </button>
+      <h2 class="text-2xl font-bold text-yellow-400 mb-6">Add AGMA Event</h2>
+      <form class="space-y-4">
+        <input type="text" placeholder="Event Name" required
+               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-100">
+        <input type="month" placeholder="Member Since"
+               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-100">
+        <select required
+                class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-100">
+          <option value="">Select Status</option>
+          <option value="Verified">Verified</option>
+          <option value="Pending">Pending</option>
+          <option value="Declined">Declined</option>
+        </select>
+        <input type="date" required
+               class="w-full px-4 py-3 bg-gray-800 border border-gray-700 rounded-xl focus:ring-2 focus:ring-yellow-500 focus:outline-none text-gray-100">
+        <button type="submit" 
+                class="w-full bg-yellow-500 text-white py-3 rounded-xl shadow hover:bg-yellow-600 transition font-semibold">
+          Add Event
+        </button>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>
