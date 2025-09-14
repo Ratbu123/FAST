@@ -1,16 +1,9 @@
 <?php
 session_start();
-<<<<<<< HEAD
 require_once "db_connection.php"; // Ensure this file defines $conn
 
 // Redirect if already logged in
 if (isset($_SESSION['user_id'])) {
-=======
-require_once "db_connection.php"; // Make sure this file returns $conn
-
-// Redirect if already logged in
-if (isset($_SESSION['admin_id'])) {
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
     header("Location: main.php");
     exit();
 }
@@ -18,27 +11,16 @@ if (isset($_SESSION['admin_id'])) {
 // Handle "Remember Me" cookie
 if (isset($_COOKIE['rememberme'])) {
     list($username, $token) = explode(':', $_COOKIE['rememberme']);
-<<<<<<< HEAD
     $stmt = $conn->prepare("SELECT user_id, remember_token, fullname FROM users WHERE username = ? AND role = 'Admin' LIMIT 1");
-=======
-    $stmt = $conn->prepare("SELECT id, remember_token, fullname FROM users WHERE username = ? AND role = 'Admin'");
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows === 1) {
-<<<<<<< HEAD
         $stmt->bind_result($user_id, $dbToken, $fullname);
         $stmt->fetch();
         if ($dbToken && hash_equals($dbToken, $token)) {
             $_SESSION['user_id']  = $user_id;
-=======
-        $stmt->bind_result($id, $dbToken, $fullname);
-        $stmt->fetch();
-        if ($dbToken && hash_equals($dbToken, $token)) {
-            $_SESSION['admin_id'] = $id;
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
             $_SESSION['username'] = $username;
             $_SESSION['fullname'] = $fullname;
             header("Location: main.php");
@@ -55,17 +37,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $password = $_POST['password'];
     $remember = isset($_POST['rememberMe']);
 
-<<<<<<< HEAD
     $stmt = $conn->prepare("SELECT user_id, password, fullname FROM users WHERE username = ? AND role = 'Admin' LIMIT 1");
-=======
-    $stmt = $conn->prepare("SELECT id, password, fullname FROM users WHERE username = ? AND role = 'Admin'");
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
 
     if ($stmt->num_rows === 1) {
-<<<<<<< HEAD
         $stmt->bind_result($user_id, $hashedPassword, $fullname);
         $stmt->fetch();
 
@@ -82,24 +59,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
                 $update = $conn->prepare("UPDATE users SET remember_token=? WHERE user_id=?");
                 $update->bind_param("si", $token, $user_id);
-=======
-        $stmt->bind_result($id, $hashedPassword, $fullname);
-        $stmt->fetch();
-
-        if (password_verify($password, $hashedPassword)) {
-            // Login success
-            $_SESSION['admin_id'] = $id;
-            $_SESSION['username'] = $username;
-            $_SESSION['fullname'] = $fullname;
-
-            if ($remember) {
-                $token = bin2hex(random_bytes(16));
-                setcookie('rememberme', "$username:$token", time() + (86400 * 30), "/");
-
-                // Save token to DB
-                $update = $conn->prepare("UPDATE users SET remember_token=? WHERE id=?");
-                $update->bind_param("si", $token, $id);
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
                 $update->execute();
                 $update->close();
             }
@@ -115,10 +74,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $stmt->close();
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
 $conn->close();
 ?>
 
@@ -133,7 +88,6 @@ $conn->close();
 </head>
 <body class="min-h-screen flex items-center justify-center bg-cover bg-center relative" style="background-image: url('images/LogInBG.jpg');">
 
-<<<<<<< HEAD
 <!-- Overlay -->
 <div class="absolute inset-0 bg-black/50"></div>
 
@@ -155,20 +109,6 @@ $conn->close();
     </p>
 
     <!-- Login Form -->
-=======
-<div class="absolute inset-0 bg-black/50"></div>
-
-<div class="relative w-full max-w-md bg-gradient-to-br from-blue-800/90 to-blue-600/90 shadow-2xl rounded-2xl p-8 text-white border border-blue-400/30">
-    <div class="text-center mb-6">
-        <h2 class="text-3xl font-bold tracking-wide">ADMIN LOGIN</h2>
-    </div>
-
-    <div class="text-center mb-6">
-        <div class="text-4xl font-extrabold text-yellow-300 drop-shadow-md">F.A.S.T</div>
-        <p class="text-gray-200 text-sm">Facial Authentication & Signature Technology</p>
-    </div>
-
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
     <form action="" method="POST" class="space-y-5">
         <div>
             <label for="username" class="block text-sm font-medium text-gray-200">Username</label>
@@ -203,15 +143,8 @@ $conn->close();
         </button>
     </form>
 
-<<<<<<< HEAD
     <!-- Powered by FAST Technology -->
     <p class="text-center text-gray-300 text-xs mt-6">Powered by FAST Technology</p>
-=======
-    <div class="mt-6 text-center">
-        <img src="./images/logo.png" alt="Logo" class="mx-auto w-16 h-16 mb-2 rounded-full shadow-lg border-2 border-yellow-400">
-        <p class="text-gray-200 text-sm">Facial Authentication & Signature Technology</p>
-    </div>
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
 </div>
 
 <!-- Error Modal -->
@@ -230,7 +163,6 @@ $conn->close();
 <script>
 const modalBox = document.getElementById('modal-box');
 if(modalBox){
-<<<<<<< HEAD
     setTimeout(() => { 
         modalBox.classList.remove('scale-0'); 
         modalBox.classList.add('scale-100'); 
@@ -242,12 +174,6 @@ if(modalBox){
             const modal = document.getElementById('error-modal'); 
             if(modal) modal.remove(); 
         }, 500);
-=======
-    setTimeout(() => { modalBox.classList.remove('scale-0'); modalBox.classList.add('scale-100'); }, 100);
-    setTimeout(() => {
-        modalBox.classList.remove('scale-100'); modalBox.classList.add('scale-0');
-        setTimeout(() => { const modal = document.getElementById('error-modal'); if(modal) modal.remove(); }, 500);
->>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
     }, 3000);
 }
 </script>
