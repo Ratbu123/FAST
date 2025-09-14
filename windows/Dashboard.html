@@ -1,0 +1,110 @@
+<?php
+// DB Connection
+$host = "localhost";  
+$user = "root";       
+$pass = "";           
+$db   = "fast_db";    
+
+$conn = new mysqli($host, $user, $pass, $db);
+if ($conn->connect_error) {
+    die("Database connection failed: " . $conn->connect_error);
+}
+
+// Totals
+$totalUsers   = $conn->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc()['total'] ?? 0;
+$totalPWD     = $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='PWD'")->fetch_assoc()['total'] ?? 0;
+$totalSenior  = $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='Senior'")->fetch_assoc()['total'] ?? 0;
+$pending      = $conn->query("SELECT COUNT(*) AS total FROM users WHERE status='Pending'")->fetch_assoc()['total'] ?? 0;
+
+// Recent activity (last 5)
+$recentActivity = $conn->query("SELECT name, action, timestamp FROM activity_log ORDER BY timestamp DESC LIMIT 5");
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>System Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-br from-gray-900 via-blue-900 to-black text-gray-100 min-h-screen">
+
+<main class="max-w-7xl mx-auto px-6 py-10">
+  <!-- Page Header -->
+  <header class="mb-10">
+    <h1 class="text-3xl font-extrabold text-yellow-400">System Dashboard</h1>
+    <p class="text-gray-300 mt-1">Monitor F.A.S.T system performance and user activity</p>
+  </header>
+
+  <!-- Metrics Grid -->
+  <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    <!-- Total Users -->
+    <div class="bg-gradient-to-r from-blue-500 to-blue-700 rounded-2xl shadow-lg p-6 text-white hover:scale-105 transform transition">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-semibold">Total PWDs & Seniors</span>
+        <i class="fas fa-users text-2xl opacity-80"></i>
+      </div>
+      <div class="text-4xl font-extrabold"><?= $totalUsers ?></div>
+      <p class="text-sm opacity-80">PWDs and Senior Citizens</p>
+    </div>
+
+    <!-- PWDs -->
+    <div class="bg-gradient-to-r from-indigo-500 to-indigo-700 rounded-2xl shadow-lg p-6 text-white hover:scale-105 transform transition">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-semibold">Total PWDs</span>
+        <i class="fas fa-wheelchair text-2xl opacity-80"></i>
+      </div>
+      <div class="text-4xl font-extrabold"><?= $totalPWD ?></div>
+      <p class="text-sm opacity-80">Registered PWDs</p>
+    </div>
+
+    <!-- Seniors -->
+    <div class="bg-gradient-to-r from-green-500 to-green-700 rounded-2xl shadow-lg p-6 text-white hover:scale-105 transform transition">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-semibold">Total Seniors</span>
+        <i class="fas fa-user-clock text-2xl opacity-80"></i>
+      </div>
+      <div class="text-4xl font-extrabold"><?= $totalSenior ?></div>
+      <p class="text-sm opacity-80">Senior Citizens</p>
+    </div>
+
+    <!-- Pending -->
+    <div class="bg-gradient-to-r from-red-500 to-red-700 rounded-2xl shadow-lg p-6 text-white hover:scale-105 transform transition">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-semibold">Pending</span>
+        <i class="fas fa-clock text-2xl opacity-80"></i>
+      </div>
+      <div class="text-4xl font-extrabold"><?= $pending ?></div>
+      <p class="text-sm opacity-80">Waiting for verification</p>
+    </div>
+  </section>
+
+  <!-- Recent Activity -->
+  <section class="bg-white/5 border border-white/20 rounded-2xl p-6 shadow-lg">
+    <div class="mb-5">
+      <h2 class="text-xl font-semibold text-yellow-400">Recent Activity</h2>
+      <p class="text-gray-300 text-sm">Latest user actions and system events</p>
+    </div>
+
+    <ul class="divide-y divide-white/10 text-gray-200">
+      <?php if ($recentActivity && $recentActivity->num_rows > 0): ?>
+        <?php while($row = $recentActivity->fetch_assoc()): ?>
+          <li class="py-3 flex justify-between items-center hover:bg-white/5 px-2 rounded-lg transition">
+            <span class="flex items-center">
+              <i class="fas fa-history text-yellow-400 mr-2"></i>
+              <?= htmlspecialchars($row['name']) ?> - <?= htmlspecialchars($row['action']) ?>
+            </span>
+            <span class="text-sm text-gray-400"><?= date("M d, Y h:i A", strtotime($row['timestamp'])) ?></span>
+          </li>
+        <?php endwhile; ?>
+      <?php else: ?>
+        <li class="py-3 text-center text-gray-400">
+          <i class="fas fa-info-circle mr-1"></i> No recent activity available.
+        </li>
+      <?php endif; ?>
+    </ul>
+  </section>
+</main>
+
+</body>
+</html>

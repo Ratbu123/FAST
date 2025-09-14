@@ -1,0 +1,140 @@
+<?php
+include "../db_connect.php"; // adjust path to your DB connection
+
+// Handle search & filter
+$search = isset($_GET['search']) ? trim($_GET['search']) : '';
+$filter = isset($_GET['filter']) ? $_GET['filter'] : 'All types';
+
+// Build query
+$query = "SELECT * FROM users WHERE 1"; 
+if ($search) {
+    $query .= " AND (name LIKE '%$search%' OR contact LIKE '%$search%')";
+}
+if ($filter === "PWD") {
+    $query .= " AND type='PWD'";
+} elseif ($filter === "Senior") {
+    $query .= " AND type='Senior'";
+}
+
+// Run query
+$result = $conn->query($query);
+
+// Stats
+$totalUsers = $conn->query("SELECT COUNT(*) AS total FROM users")->fetch_assoc()['total'];
+$totalPWD   = $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='PWD'")->fetch_assoc()['total'];
+$totalSenior= $conn->query("SELECT COUNT(*) AS total FROM users WHERE type='Senior'")->fetch_assoc()['total'];
+?>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.tailwindcss.com"></script>
+
+<div class="container user-management bg-white/5 border border-white/20 rounded-xl p-6 shadow-lg">
+
+  <!-- Header -->
+  <div class="header-title mb-6">
+    <h1 class="text-2xl font-bold text-yellow-400">User Management</h1>
+    <p class="text-gray-300">Manage PWDs and Senior Citizens registered in the F.A.S.T system</p>
+  </div>
+
+  <!-- Controls -->
+  <form method="GET" class="controls flex flex-wrap gap-4 items-center mb-6">
+    <!-- Search -->
+    <div class="relative flex-1">
+      <svg class="absolute left-3 top-3 w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"></circle>
+        <path d="m21 21-4.35-4.35"></path>
+      </svg>
+      <input type="text" name="search" value="<?= htmlspecialchars($search) ?>" 
+             class="w-full pl-10 pr-4 py-2 rounded-lg bg-white/10 border border-white/20 text-gray-200 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-yellow-400" 
+             placeholder="Search users...">
+    </div>
+
+    <!-- Filter -->
+    <select name="filter" onchange="this.form.submit()" 
+            class="bg-white/10 border border-white/20 text-gray-200 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-yellow-400">
+      <option <?= $filter=='All types'?'selected':'' ?>>All types</option>
+      <option <?= $filter=='PWD'?'selected':'' ?>>PWD</option>
+      <option <?= $filter=='Senior'?'selected':'' ?>>Senior</option>
+    </select>
+
+    <!-- Stats -->
+    <div class="flex gap-3">
+      <div class="stats-card flex items-center gap-3 bg-gradient-to-r from-yellow-400 to-yellow-600 text-black px-5 py-3 rounded-lg shadow-md">
+        <div>
+          <div class="text-2xl font-extrabold"><?= $totalUsers ?></div>
+          <div class="text-sm">Total Users</div>
+        </div>
+        <i class="fas fa-users text-2xl"></i>
+      </div>
+      <div class="stats-card flex items-center gap-3 bg-blue-500 text-white px-5 py-3 rounded-lg shadow-md">
+        <div>
+          <div class="text-2xl font-extrabold"><?= $totalPWD ?></div>
+          <div class="text-sm">PWDs</div>
+        </div>
+        <i class="fas fa-wheelchair text-2xl"></i>
+      </div>
+      <div class="stats-card flex items-center gap-3 bg-green-500 text-white px-5 py-3 rounded-lg shadow-md">
+        <div>
+          <div class="text-2xl font-extrabold"><?= $totalSenior ?></div>
+          <div class="text-sm">Seniors</div>
+        </div>
+        <i class="fas fa-blind text-2xl"></i>
+      </div>
+    </div>
+  </form>
+
+  <!-- Registered Users -->
+  <div class="registered-section mb-4 flex justify-between items-center">
+    <div class="font-semibold text-gray-200">Registered Users</div>
+    <div class="text-sm text-gray-400"><?= $result->num_rows ?> of <?= $totalUsers ?> users</div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container overflow-x-auto rounded-lg border border-white/20">
+    <table class="min-w-full text-sm">
+      <thead class="bg-white/10 text-gray-300 uppercase text-xs tracking-wide">
+        <tr>
+          <th class="px-4 py-3 text-left">User ID</th>
+          <th class="px-4 py-3 text-left">Name</th>
+          <th class="px-4 py-3 text-left">Type</th>
+          <th class="px-4 py-3 text-left">Contact</th>
+          <th class="px-4 py-3 text-left">Registration</th>
+          <th class="px-4 py-3 text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="divide-y divide-white/10 text-gray-200">
+        <?php if ($result->num_rows > 0): ?>
+          <?php while($row = $result->fetch_assoc()): ?>
+            <tr class="hover:bg-white/5 transition">
+              <td class="px-4 py-3"><?= $row['id'] ?></td>
+              <td class="px-4 py-3"><?= htmlspecialchars($row['name']) ?></td>
+              <td class="px-4 py-3">
+                <span class="px-2 py-1 rounded text-xs 
+                  <?= $row['type']=='PWD'?'bg-blue-600/40':'bg-green-600/40' ?>">
+                  <?= $row['type'] ?>
+                </span>
+              </td>
+              <td class="px-4 py-3"><?= htmlspecialchars($row['contact']) ?></td>
+              <td class="px-4 py-3"><?= date("M d, Y", strtotime($row['registration_date'])) ?></td>
+              <td class="px-4 py-3 flex gap-2 justify-center">
+                <a href="view_user.php?id=<?= $row['id'] ?>" class="flex items-center gap-1 bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded text-white text-xs transition">
+                  <i class="fas fa-eye"></i> View
+                </a>
+                <a href="edit_user.php?id=<?= $row['id'] ?>" class="flex items-center gap-1 bg-green-500 hover:bg-green-600 px-3 py-1 rounded text-white text-xs transition">
+                  <i class="fas fa-edit"></i> Edit
+                </a>
+                <a href="delete_user.php?id=<?= $row['id'] ?>" onclick="return confirm('Delete this user?')" class="flex items-center gap-1 bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white text-xs transition">
+                  <i class="fas fa-trash"></i> Delete
+                </a>
+              </td>
+            </tr>
+          <?php endwhile; ?>
+        <?php else: ?>
+          <tr>
+            <td colspan="6" class="text-center py-4 text-gray-400">No users found</td>
+          </tr>
+        <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
+</div>

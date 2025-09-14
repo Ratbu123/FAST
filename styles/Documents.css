@@ -1,0 +1,274 @@
+        .Documents-section * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        .Documents-section {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.5;
+            padding: 32px 24px;
+        }
+
+        .Documents-section .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .Documents-section .header-doc {
+            margin-bottom: 30px;
+        }
+
+        .Documents-section .header-doc h1 {
+            font-size: 25px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .Documents-section .header-doc p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .Documents-section .controls {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+
+        .Documents-section .search-container {
+            position: relative;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .Documents-section .search-input {
+            width: 100%;
+            padding: 8px 12px 8px 36px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: white;
+        }
+
+        .Documents-section .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #999;
+            width: 16px;
+            height: 16px;
+        }
+
+        .Documents-section .filter-dropdown {
+            padding: 8px 32px 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            background: white;
+            font-size: 14px;
+            cursor: pointer;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%23999' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 8px center;
+            background-repeat: no-repeat;
+            background-size: 16px;
+        }
+
+        .Documents-section .stats-section {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .Documents-section .stat-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid #e5e5e5;
+            min-width: 120px;
+        }
+
+        .Documents-section .stat-card .label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 4px;
+        }
+
+        .Documents-section .stat-card .value {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .Documents-section .phone-icon {
+            width: 16px;
+            height: 16px;
+            opacity: 0.6;
+        }
+
+        .Documents-section .registered-banner {
+            background: #FEE715;
+            padding: 12px 16px;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 0;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .Documents-section .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #e5e5e5;
+        }
+
+        .Documents-section table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .Documents-section th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: left;
+            font-weight: 500;
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 1px solid #e5e5e5;
+        }
+
+        .Documents-section td {
+            padding: 12px;
+            border-bottom: 1px solid #f0f0f0;
+            vertical-align: middle;
+        }
+
+        .Documents-section tr:last-child td {
+            border-bottom: none;
+        }
+
+        .Documents-section .user-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .Documents-section .user-name {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 2px;
+        }
+
+        .Documents-section .user-location {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .Documents-section .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .Documents-section .badge.pogi {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .Documents-section .badge.pwd-senior {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .Documents-section .badge.senior {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .Documents-section .badge.pwd {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .Documents-section .badge.verified {
+            background: #e8f5e8;
+            color: #2e7d32;
+        }
+
+        .Documents-section .badge.pending {
+            background: #ffeaa7;
+            color: #d63031;
+        }
+
+        .Documents-section .actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .Documents-section .action-btn {
+            width: 24px;
+            height: 24px;
+            border: none;
+            background: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            color: #666;
+            transition: all 0.2s;
+        }
+
+        .Documents-section .action-btn:hover {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .Documents-section .action-btn.view {
+            color: #2196f3;
+        }
+
+        .Documents-section .action-btn.edit {
+            color: #FFEB3B;
+        }
+
+        .Documents-section .action-btn.delete {
+            color: #f44336;
+        }
+
+        .Documents-section .action-btn.print {
+            color: #4caf50;
+        }
+
+        /* SVG Icons */
+        .Documents-section .action-btn svg {
+            width: 16px;
+            height: 16px;
+        }
+
+            .header-title h1,
+            .header-title p,
+            .metric-header span,
+            .metric-value,
+            .metric-subtitle,
+            .activity-header h3,
+            .activity-header p,
+            .activity-name,
+            .activity-phone,
+            .activity-time {
+                font-family: 'Montserrat', sans-serif;
+            }

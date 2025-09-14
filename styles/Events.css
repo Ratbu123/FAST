@@ -1,0 +1,269 @@
+/* Reset and Base Styles */
+.events-tab * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.events-tab {
+    font-family: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8f9fa;
+    color: #333;
+    line-height: 1.6;
+    padding: 40px 24px;
+}
+
+.events-tab .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: white;
+    min-height: 100vh;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* Header Title */
+.events-tab .header-title {
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.events-tab .header-title h1 {
+    font-size: 28px;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 6px;
+}
+
+.events-tab .header-title p {
+    font-size: 16px;
+    color: #6b7280;
+    font-weight: 400;
+}
+
+/* Header Right - Search & Dropdown */
+.events-tab .header-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* Search Styles */
+.events-tab .search-container {
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 320px;
+}
+
+.events-tab .search-input {
+    width: 100%;
+    padding: 12px 12px 12px 45px;
+    border: 2px solid #e5e7eb;
+    border-radius: 12px;
+    font-size: 1rem;
+    background-color: white;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.events-tab .search-input:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 8px rgba(59,130,246,0.3);
+    outline: none;
+}
+
+.events-tab .search-input::placeholder {
+    color: #9ca3af;
+}
+
+.events-tab .search-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    font-size: 16px;
+    pointer-events: none;
+}
+
+/* Year Filter Dropdown */
+.events-tab .year-dropdown {
+    padding: 8px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+    color: #111827;
+    background-color: #fff;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.events-tab .year-dropdown:hover,
+.events-tab .year-dropdown:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 6px rgba(59,130,246,0.2);
+}
+
+/* Table Container */
+.events-tab .table-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.05);
+}
+
+/* Table Styles */
+.events-tab .event-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+}
+
+.events-tab .table-header {
+    background-color: #FEE715;
+    color: #111827;
+}
+
+.events-tab .table-header th {
+    padding: 16px 20px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+}
+
+.events-tab .table-header th:last-child {
+    text-align: center;
+    width: 140px;
+}
+
+/* Table Row Styles */
+.events-tab .table-row {
+    border-bottom: 1px solid #e5e7eb;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.events-tab .table-row:hover {
+    background-color: #f3f4f6;
+    transform: translateY(-1px);
+}
+
+.events-tab .table-row td {
+    padding: 16px 20px;
+    vertical-align: top;
+}
+
+/* Name Cell Styles */
+.events-tab .name-cell {
+    min-width: 280px;
+}
+
+.events-tab .user-id {
+    font-size: 12px;
+    color: #9ca3af;
+    margin-bottom: 2px;
+    font-weight: 500;
+}
+
+.events-tab .user-name {
+    font-size: 16px;
+    font-weight: 600;
+    color: #111827;
+    margin-bottom: 2px;
+}
+
+.events-tab .user-phone {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 4px;
+}
+
+.events-tab .user-tag {
+    display: inline-block;
+    padding: 2px 8px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    font-size: 11px;
+    border-radius: 12px;
+    font-weight: 500;
+}
+
+/* Member Since Styles */
+.events-tab .member-since {
+    font-size: 14px;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+/* Status Badge Styles */
+.events-tab .status-cell {
+    text-align: center;
+}
+
+.events-tab .status-badge {
+    display: inline-block;
+    padding: 6px 14px;
+    border-radius: 16px;
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    transition: all 0.2s;
+}
+
+.events-tab .status-badge.registered {
+    background-color: #16a34a;
+    color: white;
+}
+
+/* Signed Date Styles */
+.events-tab .signed-date {
+    font-size: 14px;
+    color: #6b7280;
+    white-space: nowrap;
+}
+
+/* Time Cell Styles */
+.events-tab .time-cell {
+    font-size: 12px;
+    color: #9ca3af;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .events-tab .container {
+        padding: 20px 12px;
+    }
+    
+    .events-tab .header-right {
+        align-items: flex-start;
+        width: 100%;
+    }
+    
+    .events-tab .search-input {
+        max-width: 100%;
+    }
+    
+    .events-tab .table-container {
+        overflow-x: auto;
+    }
+    
+    .events-tab .event-table {
+        min-width: 700px;
+    }
+    
+    .events-tab .table-header th,
+    .events-tab .table-row td {
+        padding: 12px 15px;
+    }
+    
+    .events-tab .name-cell {
+        min-width: 220px;
+    }
+}
