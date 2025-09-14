@@ -1,7 +1,34 @@
+<<<<<<< HEAD
+=======
+<?php
+// Database connection
+$host = "localhost";
+$user = "root"; // change if hosted
+$pass = "";
+$db   = "fast_system"; // change to your db name
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Handle search safely
+$search = isset($_GET['search']) ? trim($_GET['search']) : "";
+$sql = "SELECT * FROM biometric_records 
+        WHERE user_name LIKE ? OR id LIKE ? 
+        ORDER BY last_verification DESC";
+$stmt = $conn->prepare($sql);
+$searchTerm = "%$search%";
+$stmt->bind_param("ss", $searchTerm, $searchTerm);
+$stmt->execute();
+$result = $stmt->get_result();
+?>
+>>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+<<<<<<< HEAD
   <title>Biometric Records - F.A.S.T</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
@@ -98,3 +125,85 @@
   </main>
 </body>
 </html>
+=======
+  <title>Biometric Records</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a2e0e6ad53.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 min-h-screen">
+  <div class="max-w-7xl mx-auto px-6 py-8">
+
+    <!-- Header -->
+    <header class="mb-10">
+      <h1 class="text-3xl font-extrabold text-yellow-400">Biometric Records</h1>
+      <p class="text-gray-300 mt-1">Monitor biometric data records across the system</p>
+    </header>
+
+    <!-- Search -->
+    <div class="flex flex-col sm:flex-row items-center justify-between mb-6 gap-4">
+      <form method="GET" class="flex items-center w-full sm:w-auto max-w-md">
+        <div class="relative w-full">
+          <input type="text" name="search" value="<?= htmlspecialchars($search) ?>"
+                 class="w-full pl-10 pr-4 py-2 rounded-xl border border-gray-300 shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                 placeholder="Search by user or number...">
+          <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
+        </div>
+        <button type="submit" class="ml-3 px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition">
+          Search
+        </button>
+      </form>
+    </div>
+
+    <!-- Table -->
+    <div class="bg-white shadow-lg rounded-xl overflow-hidden">
+      <table class="min-w-full divide-y divide-gray-200">
+        <thead class="bg-gray-50">
+          <tr>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">User</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Type</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Registration</th>
+            <th class="px-6 py-3 text-left text-sm font-semibold text-gray-700">Last Verification</th>
+            <th class="px-6 py-3 text-center text-sm font-semibold text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-white divide-y divide-gray-200">
+          <?php if ($result->num_rows > 0): ?>
+            <?php while($row = $result->fetch_assoc()): ?>
+              <tr>
+                <td class="px-6 py-4 text-sm text-gray-800"><?= htmlspecialchars($row['user_name']) ?></td>
+                <td class="px-6 py-4 text-sm">
+                  <span class="px-3 py-1 rounded-full text-xs font-semibold 
+                    <?= $row['type'] === 'PWD' ? 'bg-blue-100 text-blue-800' : 'bg-yellow-100 text-yellow-800' ?>">
+                    <?= htmlspecialchars($row['type']) ?>
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600">
+                  <?= $row['registration_date'] ? date("F d, Y", strtotime($row['registration_date'])) : '-' ?>
+                </td>
+                <td class="px-6 py-4 text-sm text-gray-600">
+                  <?= $row['last_verification'] ? date("F d, Y h:i A", strtotime($row['last_verification'])) : '-' ?>
+                </td>
+                <td class="px-6 py-4 text-center space-x-2">
+                  <button class="px-3 py-1 text-xs bg-indigo-600 text-white rounded-lg hover:bg-indigo-700">View</button>
+                  <button class="px-3 py-1 text-xs bg-red-600 text-white rounded-lg hover:bg-red-700">Delete</button>
+                </td>
+              </tr>
+            <?php endwhile; ?>
+          <?php else: ?>
+            <tr>
+              <td colspan="5" class="px-6 py-8 text-center text-gray-500 text-sm">
+                <i class="fas fa-info-circle text-gray-400 mr-2"></i> No biometric records found.
+              </td>
+            </tr>
+          <?php endif; ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+<?php 
+$stmt->close();
+$conn->close(); 
+?>
+>>>>>>> 422a8f9085c217362d8c2725850f61b0e001d3ee
